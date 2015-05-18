@@ -1,0 +1,394 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     14071,        384]
+NotebookOptionsPosition[     13193,        353]
+NotebookOutlinePosition[     13535,        368]
+CellTagsIndexPosition[     13492,        365]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"vars", "[", 
+   RowBox[{"s_String", ",", 
+    RowBox[{"n_Integer", "?", "Positive"}]}], "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"Symbol", "[", 
+     RowBox[{"s", "<>", 
+      RowBox[{"ToString", "[", "i", "]"}]}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", "n"}], "}"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"vars", "[", 
+    RowBox[{"sym_Symbol", ",", "num_"}], "]"}], ":=", 
+   RowBox[{"vars", "[", 
+    RowBox[{
+     RowBox[{"SymbolName", "[", "sym", "]"}], ",", "num"}], "]"}]}], 
+  "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"nestedRange", "[", 
+    RowBox[{"vars_List", ",", "min_", ",", "max_"}], "]"}], "/;", 
+   RowBox[{"min", "\[LessEqual]", "max"}]}], ":=", 
+  RowBox[{"Transpose", "@", 
+   RowBox[{"{", 
+    RowBox[{"vars", ",", 
+     RowBox[{"ConstantArray", "[", 
+      RowBox[{"min", ",", 
+       RowBox[{"Length", "[", "vars", "]"}]}], "]"}], ",", 
+     RowBox[{"ConstantArray", "[", 
+      RowBox[{"max", ",", 
+       RowBox[{"Length", "[", "vars", "]"}]}], "]"}]}], "}"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"nestedSum", "[", 
+    RowBox[{"f_", ",", 
+     RowBox[{"vars", ":", 
+      RowBox[{"{", "__Symbol", "}"}]}], ",", "min_", ",", "max_"}], "]"}], "/;", 
+   RowBox[{"min", "\[LessEqual]", "max"}]}], ":=", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"r", "=", 
+      RowBox[{"Sequence", "@@", 
+       RowBox[{"Reverse", "@", 
+        RowBox[{"nestedRange", "[", 
+         RowBox[{"vars", ",", "min", ",", "max"}], "]"}]}]}]}], "}"}], ",", 
+    RowBox[{"Sum", "[", 
+     RowBox[{"f", ",", "r"}], "]"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"nestedSum", "[", 
+    RowBox[{"f_", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"var", ":", 
+        RowBox[{"(", 
+         RowBox[{"_String", "|", "_Symbol"}], ")"}]}], ",", 
+       RowBox[{"num_Integer", "?", "Positive"}]}], "}"}], ",", "min_", ",", 
+     "max_"}], "]"}], "/;", 
+   RowBox[{"min", "\[LessEqual]", "max"}]}], ":=", 
+  RowBox[{"nestedSum", "[", 
+   RowBox[{"f", ",", 
+    RowBox[{"vars", "[", 
+     RowBox[{"var", ",", "num"}], "]"}], ",", "min", ",", "max"}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.63720508896431*^9, 3.63720508896431*^9}, {
+   3.637205120810089*^9, 3.6372051269358187`*^9}, {3.6372054111183724`*^9, 
+   3.637205427721097*^9}, {3.6372055070712986`*^9, 3.6372055201785107`*^9}, 
+   3.6372057638860292`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"nestedSum", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"a", ",", "b", ",", "c"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"a", ",", "b", ",", "c"}], "}"}], ",", "0", ",", "3"}], "]"}], "//",
+   "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.637205095892276*^9, 3.6372050959235225`*^9}, {
+  3.6372058060112977`*^9, 3.637205814087037*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"down", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"a", ",", "b"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NewCoords", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"r", ",", "\[Theta]"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"OldCoords", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"r", " ", 
+      RowBox[{"Cos", "[", "\[Theta]", "]"}]}], ",", 
+     RowBox[{"r", " ", 
+      RowBox[{"Sin", "[", "\[Theta]", "]"}]}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"OldVector", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SumIdxs", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "j"}], "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6372074863594637`*^9, 3.637207492869811*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Table", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nestedSum", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Product", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"D", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"OldCoords", "[", 
+           RowBox[{"[", 
+            RowBox[{"SumIdxs", "[", 
+             RowBox[{"[", "di", "]"}], "]"}], "]"}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"NewCoords", "[", 
+           RowBox[{"[", 
+            RowBox[{"down", "[", 
+             RowBox[{"[", "di", "]"}], "]"}], "]"}], "]"}]}], 
+         "\[IndentingNewLine]", "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"di", ",", 
+          RowBox[{"Length", "[", "down", "]"}]}], "}"}]}], "]"}], " ", 
+      "\[IndentingNewLine]", ",", "SumIdxs", ",", "1", ",", 
+      RowBox[{"Length", "[", "OldCoords", "]"}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{"a", ",", "2"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"b", ",", "2"}], "}"}]}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.637207581625924*^9, 3.6372076211478977`*^9}, 
+   3.6372076564643774`*^9, {3.6372077580470924`*^9, 3.6372077644448175`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "pspec"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(i\\)\[NoBreak] is \
+neither an integer nor a list of integers. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/pspec\\\", ButtonNote -> \
+\\\"Part::pspec\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.637207550759444*^9, {3.637207583266731*^9, 3.637207589798631*^9}, {
+   3.6372076416625576`*^9, 3.6372076567768745`*^9}, {3.6372077584533677`*^9, 
+   3.6372077647416906`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "pspec"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(#3\\)\[NoBreak] is \
+neither an integer nor a list of integers. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/pspec\\\", ButtonNote -> \
+\\\"Part::pspec\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.637207550759444*^9, {3.637207583266731*^9, 3.637207589798631*^9}, {
+   3.6372076416625576`*^9, 3.6372076567768745`*^9}, {3.6372077584533677`*^9, 
+   3.6372077647416906`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "pspec"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(#3\\)\[NoBreak] is \
+neither an integer nor a list of integers. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/pspec\\\", ButtonNote -> \
+\\\"Part::pspec\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.637207550759444*^9, {3.637207583266731*^9, 3.637207589798631*^9}, {
+   3.6372076416625576`*^9, 3.6372076567768745`*^9}, {3.6372077584533677`*^9, 
+   3.6372077647416906`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(Part :: \
+pspec\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this \
+calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.637207550759444*^9, {3.637207583266731*^9, 3.637207589798631*^9}, {
+   3.6372076416625576`*^9, 3.6372076567768745`*^9}, {3.6372077584533677`*^9, 
+   3.6372077647416906`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"a", "=", "1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"b", "=", "2"}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"j", "=", "1"}], ";"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"nestedSum", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"product", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"d", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"OldCoords", "[", 
+        RowBox[{"[", 
+         RowBox[{"SumIdxs", "[", 
+          RowBox[{"[", "di", "]"}], "]"}], "]"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"NewCoords", "[", 
+        RowBox[{"[", 
+         RowBox[{"down", "[", 
+          RowBox[{"[", "di", "]"}], "]"}], "]"}], "]"}]}], 
+      "\[IndentingNewLine]", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"di", ",", 
+       RowBox[{"Length", "[", "down", "]"}]}], "}"}]}], "]"}], " ", 
+   "\[IndentingNewLine]", ",", "SumIdxs", ",", "1", ",", 
+   RowBox[{"Length", "[", "OldCoords", "]"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Clear", "[", "a", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Clear", "[", "b", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Clear", "[", "i", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Clear", "[", "j", "]"}]}], "Input",
+ CellChangeTimes->{{3.6372076732235956`*^9, 3.6372077492494507`*^9}, {
+  3.6372077941720953`*^9, 3.6372078098035865`*^9}, {3.6372078410749025`*^9, 
+  3.637207864032999*^9}, {3.6372079646241245`*^9, 3.6372080389624577`*^9}, {
+  3.6372080860518804`*^9, 3.6372080895849094`*^9}, {3.6372081590215187`*^9, 
+  3.6372081681358824`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "pspec"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(di\\)\[NoBreak] is \
+neither an integer nor a list of integers. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/pspec\\\", ButtonNote -> \
+\\\"Part::pspec\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.6372081597095904`*^9, 3.6372081684483843`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "pspec"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(SumIdxs \
+\[LeftDoubleBracket] di \[RightDoubleBracket]\\)\[NoBreak] is neither an \
+integer nor a list of integers. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/pspec\\\", ButtonNote -> \
+\\\"Part::pspec\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.6372081597095904`*^9, 3.6372081684952574`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "pspec"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(di\\)\[NoBreak] is \
+neither an integer nor a list of integers. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/pspec\\\", ButtonNote -> \
+\\\"Part::pspec\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.6372081597095904`*^9, 3.6372081685265265`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(Part :: \
+pspec\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this \
+calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.6372081597095904`*^9, 3.6372081685421305`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"nestedSum", "[", 
+  RowBox[{
+   RowBox[{"product", "[", 
+    RowBox[{
+     RowBox[{"d", "[", 
+      RowBox[{
+       RowBox[{"OldCoords", "\[LeftDoubleBracket]", 
+        RowBox[{
+        "SumIdxs", "\[LeftDoubleBracket]", "di", "\[RightDoubleBracket]"}], 
+        "\[RightDoubleBracket]"}], ",", 
+       RowBox[{"NewCoords", "\[LeftDoubleBracket]", 
+        RowBox[{
+        "down", "\[LeftDoubleBracket]", "di", "\[RightDoubleBracket]"}], 
+        "\[RightDoubleBracket]"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"di", ",", "0"}], "}"}]}], "]"}], ",", "SumIdxs", ",", "1", ",",
+    "0"}], "]"}]], "Output",
+ CellChangeTimes->{
+  3.6372077082416596`*^9, {3.637207744998995*^9, 3.6372077663981295`*^9}, {
+   3.637207798313057*^9, 3.6372078109443817`*^9}, {3.6372078415436954`*^9, 
+   3.637207864704906*^9}, {3.6372079709300146`*^9, 3.63720803975937*^9}, {
+   3.637208079019865*^9, 3.6372080901788335`*^9}, {3.6372081414140215`*^9, 
+   3.637208168557764*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.637208063692916*^9, 3.6372080637229357`*^9}}]
+},
+WindowSize->{1912, 951},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (October 6, 2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 2480, 71, 132, "Input"],
+Cell[3040, 93, 388, 10, 31, "Input"],
+Cell[3431, 105, 881, 26, 112, "Input"],
+Cell[CellGroupData[{
+Cell[4337, 135, 1256, 31, 192, "Input"],
+Cell[5596, 168, 631, 13, 21, "Message"],
+Cell[6230, 183, 632, 13, 21, "Message"],
+Cell[6865, 198, 632, 13, 21, "Message"],
+Cell[7500, 213, 685, 14, 21, "Message"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8222, 232, 1684, 39, 312, "Input"],
+Cell[9909, 273, 503, 10, 21, "Message"],
+Cell[10415, 285, 556, 11, 21, "Message"],
+Cell[10974, 298, 503, 10, 21, "Message"],
+Cell[11480, 310, 556, 11, 21, "Message"],
+Cell[12039, 323, 991, 23, 30, "Output"]
+}, Open  ]],
+Cell[13045, 349, 144, 2, 31, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
