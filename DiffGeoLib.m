@@ -1,17 +1,16 @@
 (* ::Package:: *)
 
-(* ::Text:: *)
-(*Todo*)
-(*1. change all sum and table variables to be more obscure (triple)*)
-(*2. Change everything so all down is ALWAYS returned.*)
-(*3. add raise and lower functions*)
+Todo
+1. change all sum and table variables to be more obscure (triple)
+2. Change everything so all down is ALWAYS returned.
+3. add raise and lower functions
 
 
 (* ::Input::Initialization:: *)
 (* \[CapitalGamma][c_,a_,b_,met_,coord_] gives Subsuperscript[\[CapitalGamma], ab, c]  for a given metric (nxn matrix) and coordinate system *)
 \[CapitalGamma][c_, a_, b_, met_, coord_] := Module[{imet, n}, n = Length[coord]; imet = Inverse[met];
 Return[(1/2) Sum[imet[[c, d]] (D[met[[a, d]], coord[[b]]] + D[met[[b, d]], coord[[a]]] - D[met[[a, b]], coord[[d]]]), {d, 1, n}]]]
-\[CapitalGamma][met_,coord_]:=Table[\[CapitalGamma][c,a,b,met,coord],{c,1,Length[coord]},{a,1,Length[coord]},{b,1,Length[coord]}]
+\[CapitalGamma][met_,coord_]:=Table[\[CapitalGamma][ccc,aaa,bbb,met,coord],{ccc,1,Length[coord]},{aaa,1,Length[coord]},{bbb,1,Length[coord]}]
 
 
 (* ::Input::Initialization:: *)

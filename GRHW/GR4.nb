@@ -1,0 +1,3528 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    135562,       3520]
+NotebookOptionsPosition[    134293,       3493]
+NotebookOutlinePosition[    134666,       3509]
+CellTagsIndexPosition[    134623,       3506]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"$PrePrint", "=", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"MatrixQ", "[", "#", "]"}], ",", 
+      RowBox[{"MatrixForm", "[", "#", "]"}], ",", "#"}], "]"}], "&"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Import", "[", 
+  RowBox[{
+   RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<../DiffGeoLib.m\>\""}],
+   "]"}]}], "Input",
+ CellLabel->"In[9]:=",ExpressionUUID->"a8a49900-eb86-4820-b819-f85b5891a648"],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "\[Phi]", "]"}]], "Input",
+ CellChangeTimes->{{3.7500176134363327`*^9, 3.750017615587782*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"543c18ef-9107-4d92-a39d-c716a591ea01"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Derivative", "[", 
+     RowBox[{"1", ",", "0", ",", "0"}], "]"}], "[", "\[Phi]", "]"}], "[", 
+   RowBox[{"x", ",", "y", ",", "z"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"-", "2"}], "x", " ", 
+   RowBox[{"\[Phi]", "[", 
+    RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Derivative", "[", 
+     RowBox[{"0", ",", "1", ",", "0"}], "]"}], "[", "\[Phi]", "]"}], "[", 
+   RowBox[{"x", ",", "y", ",", "z"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"-", "2"}], "y", " ", 
+   RowBox[{"\[Phi]", "[", 
+    RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Derivative", "[", 
+     RowBox[{"0", ",", "0", ",", "1"}], "]"}], "[", "\[Phi]", "]"}], "[", 
+   RowBox[{"x", ",", "y", ",", "z"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"-", "2"}], "z", " ", 
+   RowBox[{"\[Phi]", "[", 
+    RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"g", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          RowBox[{"2", " ", 
+           RowBox[{"\[Phi]", "[", 
+            RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], ")"}]}], ",", "0", 
+       ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"1", "-", 
+        RowBox[{"2", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], ",", "0", ",", "0"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", 
+       RowBox[{"1", "-", 
+        RowBox[{"2", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], ",", "0"}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "0", ",", 
+       RowBox[{"1", "-", 
+        RowBox[{"2", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]}], "}"}]}], "}"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.7500168894594436`*^9, 3.75001698947631*^9}, {
+  3.750017042896965*^9, 3.7500170692765427`*^9}, {3.7500173778173923`*^9, 
+  3.7500173867388115`*^9}, {3.7500175387586775`*^9, 3.7500176046440086`*^9}, {
+  3.7500176706382227`*^9, 3.750017750395878*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"dd5ef2ed-3610-4f1d-ae66-b60320fa35b4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"RT", " ", "=", " ", 
+   RowBox[{"RiemannTensor", "[", 
+    RowBox[{"g", ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{
+    RowBox[{"Series", "[", 
+     RowBox[{"RT", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\[Phi]", "[", 
+         RowBox[{"x", ",", "y", ",", "z"}], "]"}], ",", "0", ",", "1"}], 
+       "}"}]}], "]"}], "/.", 
+    RowBox[{
+     InterpretationBox[
+      SuperscriptBox[
+       RowBox[{"O", "[", 
+        RowBox[{"\[Phi]", "[", 
+         RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+      SeriesData[
+       $CellContext`\[Phi][$CellContext`x, $CellContext`y, $CellContext`z], 
+       0, {}, 1, 2, 1],
+      Editable->False], "\[Rule]", " ", "0"}]}], "]"}], "//", 
+  "MatrixForm"}], "\[IndentingNewLine]", 
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"R", "[", 
+   RowBox[{"g", ",", 
+    RowBox[{"{", 
+     RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "}"}]}], "]"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{
+   RowBox[{"Series", "[", 
+    RowBox[{"%", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\[Phi]", "[", 
+        RowBox[{"x", ",", "y", ",", "z"}], "]"}], ",", "0", ",", "1"}], 
+      "}"}]}], "]"}], "/.", 
+   RowBox[{
+    RowBox[{"O", "[", 
+     RowBox[{"\[Phi]", "[", 
+      RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "\[Rule]", " ", 
+    "0"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.750017009746904*^9, 3.75001702031174*^9}, {
+   3.7500172680793953`*^9, 3.750017294269927*^9}, {3.7500177378645*^9, 
+   3.75001782457819*^9}, 3.75001786324826*^9, {3.750017976841496*^9, 
+   3.7500180238017807`*^9}, {3.7500181004803095`*^9, 
+   3.7500181038563995`*^9}, {3.7500183100737267`*^9, 3.750018325855817*^9}, {
+   3.7504685637500324`*^9, 3.7504686404075413`*^9}, {3.7504687094946795`*^9, 
+   3.7504687262246776`*^9}},
+ CellLabel->"In[50]:=",ExpressionUUID->"35977433-4dde-4c41-844f-25bb30b7d54b"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "2"}], "+", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["x", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {-2 + 4 $CellContext`x^2}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "y", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False]},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "2"}], "+", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["x", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {-2 + 4 $CellContext`x^2}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "y", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "y", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "2"}], "+", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["y", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {-2 + 4 $CellContext`y^2}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "y", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False]},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "y", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "2"}], "+", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["y", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {-2 + 4 $CellContext`y^2}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "y", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "y", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "2"}], "+", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["z", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {-2 + 4 $CellContext`z^2}, 1, 2, 1],
+           Editable->False]},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "y", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "2"}], "+", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["z", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {-2 + 4 $CellContext`z^2}, 1, 2, 1],
+           Editable->False], "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]},
+     {
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"2", "-", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["x", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 - 4 $CellContext`x^2}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "y"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False]},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"2", "-", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["x", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 - 4 $CellContext`x^2}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "y"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], "0", "0", "0"},
+         {"0", 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", 
+               SuperscriptBox["x", "2"], "+", 
+               SuperscriptBox["y", "2"]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 (-1 + $CellContext`x^2 + $CellContext`y^2)}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "y", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"-", "1"}], "+", 
+                SuperscriptBox["x", "2"], "+", 
+                SuperscriptBox["y", "2"]}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) (-1 + $CellContext`x^2 + $CellContext`y^2)}, 1, 2, 
+            1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"y", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False]}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], "0", "0", "0"},
+         {"0", 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "y", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", 
+               SuperscriptBox["x", "2"], "+", 
+               SuperscriptBox["z", "2"]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 (-1 + $CellContext`x^2 + $CellContext`z^2)}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"y", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "y", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"-", "1"}], "+", 
+                SuperscriptBox["x", "2"], "+", 
+                SuperscriptBox["z", "2"]}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) (-1 + $CellContext`x^2 + $CellContext`z^2)}, 1, 2, 
+            1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "y"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False]}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]},
+     {
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "y"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"2", "-", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["y", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 - 4 $CellContext`y^2}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"y", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False]},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "y"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"2", "-", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["y", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 - 4 $CellContext`y^2}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"y", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], "0", "0", "0"},
+         {"0", 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"-", "1"}], "+", 
+                SuperscriptBox["x", "2"], "+", 
+                SuperscriptBox["y", "2"]}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) (-1 + $CellContext`x^2 + $CellContext`y^2)}, 1, 2, 
+            1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"y", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", 
+               SuperscriptBox["x", "2"], "+", 
+               SuperscriptBox["y", "2"]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 (-1 + $CellContext`x^2 + $CellContext`y^2)}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "y", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False]}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], "0", "0", "0"},
+         {"0", 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "y", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", 
+               SuperscriptBox["y", "2"], "+", 
+               SuperscriptBox["z", "2"]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 (-1 + $CellContext`y^2 + $CellContext`z^2)}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "y"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"-", "1"}], "+", 
+                SuperscriptBox["y", "2"], "+", 
+                SuperscriptBox["z", "2"]}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) (-1 + $CellContext`y^2 + $CellContext`z^2)}, 1, 2, 
+            1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False]}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]},
+     {
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"y", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"2", "-", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["z", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 - 4 $CellContext`z^2}, 1, 2, 1],
+           Editable->False]},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"y", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], "0", "0", "0"},
+         {
+          InterpretationBox[
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"2", "-", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["z", "2"]}]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 - 4 $CellContext`z^2}, 1, 2, 1],
+           Editable->False], "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], "0", "0", "0"},
+         {"0", 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"y", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"-", "1"}], "+", 
+                SuperscriptBox["x", "2"], "+", 
+                SuperscriptBox["z", "2"]}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) (-1 + $CellContext`x^2 + $CellContext`z^2)}, 1, 2, 
+            1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "y", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`y $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "y"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", 
+               SuperscriptBox["x", "2"], "+", 
+               SuperscriptBox["z", "2"]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 (-1 + $CellContext`x^2 + $CellContext`z^2)}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "y", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False]}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], "0", "0", "0"},
+         {"0", 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "z", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "y"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{"x", " ", "z"}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) $CellContext`x $CellContext`z}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"4", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"-", "1"}], "+", 
+                SuperscriptBox["y", "2"], "+", 
+                SuperscriptBox["z", "2"]}], ")"}], " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-4) (-1 + $CellContext`y^2 + $CellContext`z^2)}, 1, 2, 
+            1],
+           Editable->False]},
+         {"0", 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", "x", " ", "y", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 $CellContext`x $CellContext`y}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           RowBox[{
+            RowBox[{"4", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", 
+               SuperscriptBox["y", "2"], "+", 
+               SuperscriptBox["z", "2"]}], ")"}], " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+            InterpretationBox[
+             SuperscriptBox[
+              RowBox[{"O", "[", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+             SeriesData[
+              $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+             Editable->False]}],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {4 (-1 + $CellContext`y^2 + $CellContext`z^2)}, 1, 2, 1],
+           Editable->False], 
+          InterpretationBox[
+           SuperscriptBox[
+            RowBox[{"O", "[", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "3"],
+           SeriesData[
+            $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 3, 3, 1],
+           Editable->False]}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"},
+         {"0", "0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{
+  3.750017021597983*^9, 3.7500170722189045`*^9, {3.7500172704177694`*^9, 
+   3.7500172998848047`*^9}, 3.7500173902347813`*^9, {3.7500177152453604`*^9, 
+   3.750017878039921*^9}, {3.7500179894743814`*^9, 3.750018025116762*^9}, 
+   3.7500181052475805`*^9, 3.7504684254842863`*^9, {3.7504685735301533`*^9, 
+   3.750468596567994*^9}, {3.7504686319247704`*^9, 3.7504686426180124`*^9}, {
+   3.7504687149652777`*^9, 3.750468727760836*^9}},
+ CellLabel->
+  "Out[51]//MatrixForm=",ExpressionUUID->"b9b5b95f-e5aa-43b0-8ea6-\
+abad9aafc9ef"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{"4", " ", 
+   RowBox[{"\[Phi]", "[", 
+    RowBox[{"x", ",", "y", ",", "z"}], "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{"3", "-", 
+     RowBox[{"2", " ", 
+      SuperscriptBox["x", "2"]}], "-", 
+     RowBox[{"2", " ", 
+      SuperscriptBox["y", "2"]}], "-", 
+     RowBox[{"2", " ", 
+      SuperscriptBox["z", "2"]}], "+", 
+     RowBox[{"2", " ", 
+      RowBox[{"\[Phi]", "[", 
+       RowBox[{"x", ",", "y", ",", "z"}], "]"}], " ", 
+      RowBox[{"(", 
+       RowBox[{"9", "-", 
+        RowBox[{"11", " ", 
+         SuperscriptBox["x", "2"]}], "-", 
+        RowBox[{"11", " ", 
+         SuperscriptBox["y", "2"]}], "-", 
+        RowBox[{"11", " ", 
+         SuperscriptBox["z", "2"]}], "-", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           RowBox[{"2", " ", 
+            SuperscriptBox["x", "2"]}], "+", 
+           RowBox[{"2", " ", 
+            SuperscriptBox["y", "2"]}], "+", 
+           RowBox[{"2", " ", 
+            SuperscriptBox["z", "2"]}]}], ")"}], " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+        RowBox[{"12", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "3"}], "+", 
+           SuperscriptBox["x", "2"], "+", 
+           SuperscriptBox["y", "2"], "+", 
+           SuperscriptBox["z", "2"]}], ")"}], " ", 
+         SuperscriptBox[
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}], "2"]}]}], ")"}]}]}], 
+    ")"}]}], 
+  RowBox[{
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "1"}], "+", 
+      RowBox[{"2", " ", 
+       RowBox[{"\[Phi]", "[", 
+        RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], ")"}], "3"], " ", 
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"1", "+", 
+      RowBox[{"2", " ", 
+       RowBox[{"\[Phi]", "[", 
+        RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], ")"}], 
+    "2"]}]]], "Output",
+ CellChangeTimes->{
+  3.750017021597983*^9, 3.7500170722189045`*^9, {3.7500172704177694`*^9, 
+   3.7500172998848047`*^9}, 3.7500173902347813`*^9, {3.7500177152453604`*^9, 
+   3.750017878039921*^9}, {3.7500179894743814`*^9, 3.750018025116762*^9}, 
+   3.7500181052475805`*^9, 3.7504684254842863`*^9, {3.7504685735301533`*^9, 
+   3.750468596567994*^9}, {3.7504686319247704`*^9, 3.7504686426180124`*^9}, {
+   3.7504687149652777`*^9, 3.7504687279444604`*^9}},
+ CellLabel->"Out[52]=",ExpressionUUID->"d9f3169f-14dd-482f-b330-e7baaf8eefe0"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "12"}], "+", 
+      RowBox[{"8", " ", 
+       SuperscriptBox["x", "2"]}], "+", 
+      RowBox[{"8", " ", 
+       SuperscriptBox["y", "2"]}], "+", 
+      RowBox[{"8", " ", 
+       SuperscriptBox["z", "2"]}]}], ")"}], " ", 
+    RowBox[{"\[Phi]", "[", 
+     RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+   InterpretationBox[
+    SuperscriptBox[
+     RowBox[{"O", "[", 
+      RowBox[{"\[Phi]", "[", 
+       RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+    SeriesData[
+     $CellContext`\[Phi][$CellContext`x, $CellContext`y, $CellContext`z], 
+     0, {}, 1, 2, 1],
+    Editable->False]}],
+  SeriesData[
+   $CellContext`\[Phi][$CellContext`x, $CellContext`y, $CellContext`z], 
+   0, {-12 + 8 $CellContext`x^2 + 8 $CellContext`y^2 + 8 $CellContext`z^2}, 1,
+    2, 1],
+  Editable->False]], "Output",
+ CellChangeTimes->{
+  3.750017021597983*^9, 3.7500170722189045`*^9, {3.7500172704177694`*^9, 
+   3.7500172998848047`*^9}, 3.7500173902347813`*^9, {3.7500177152453604`*^9, 
+   3.750017878039921*^9}, {3.7500179894743814`*^9, 3.750018025116762*^9}, 
+   3.7500181052475805`*^9, 3.7504684254842863`*^9, {3.7504685735301533`*^9, 
+   3.750468596567994*^9}, {3.7504686319247704`*^9, 3.7504686426180124`*^9}, {
+   3.7504687149652777`*^9, 3.750468727949443*^9}},
+ CellLabel->"Out[53]=",ExpressionUUID->"4c07d8e8-7783-4eb2-86c5-80a3050ef99d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"\[CapitalGamma]", "[", 
+   RowBox[{"g", ",", 
+    RowBox[{"{", 
+     RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "}"}]}], "]"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{
+    RowBox[{"Series", "[", 
+     RowBox[{"%", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\[Phi]", "[", 
+         RowBox[{"x", ",", "y", ",", "z"}], "]"}], ",", "0", ",", "1"}], 
+       "}"}]}], "]"}], "/.", 
+    RowBox[{
+     InterpretationBox[
+      SuperscriptBox[
+       RowBox[{"O", "[", 
+        RowBox[{"\[Phi]", "[", 
+         RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+      SeriesData[
+       $CellContext`\[Phi][$CellContext`x, $CellContext`y, $CellContext`z], 
+       0, {}, 1, 2, 1],
+      Editable->False], "\[Rule]", " ", "0"}]}], "]"}], "//", 
+  "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.7504684414465284`*^9, 3.750468485067534*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"1e37f140-a284-4309-acf2-8efac2f07049"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"x", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          FractionBox["1", 
+           RowBox[{"1", "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       RowBox[{"y", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          FractionBox["1", 
+           RowBox[{"1", "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       RowBox[{"z", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          FractionBox["1", 
+           RowBox[{"1", "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}]}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"x", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          FractionBox["1", 
+           RowBox[{"1", "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"y", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          FractionBox["1", 
+           RowBox[{"1", "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"z", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          FractionBox["1", 
+           RowBox[{"1", "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       "0", ",", "0", ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"x", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       FractionBox[
+        RowBox[{"2", " ", "x", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", 
+       FractionBox[
+        RowBox[{"2", " ", "y", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", 
+       FractionBox[
+        RowBox[{"2", " ", "z", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       FractionBox[
+        RowBox[{"2", " ", "y", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", 
+       RowBox[{"x", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       FractionBox[
+        RowBox[{"2", " ", "z", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", "0", ",", 
+       RowBox[{"x", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}]}], 
+      "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"y", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"y", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       FractionBox[
+        RowBox[{"2", " ", "x", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", "0"}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       FractionBox[
+        RowBox[{"2", " ", "x", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", 
+       FractionBox[
+        RowBox[{"2", " ", "y", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", 
+       FractionBox[
+        RowBox[{"2", " ", "z", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", 
+       FractionBox[
+        RowBox[{"2", " ", "z", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", 
+       RowBox[{"y", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}]}], 
+      "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"z", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"z", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       "0", ",", 
+       FractionBox[
+        RowBox[{"2", " ", "x", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", 
+       RowBox[{"z", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"2", " ", 
+             RowBox[{"\[Phi]", "[", 
+              RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], ")"}]}], ",", 
+       FractionBox[
+        RowBox[{"2", " ", "y", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       FractionBox[
+        RowBox[{"2", " ", "x", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", 
+       FractionBox[
+        RowBox[{"2", " ", "y", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]], ",", 
+       FractionBox[
+        RowBox[{"2", " ", "z", " ", 
+         RowBox[{"\[Phi]", "[", 
+          RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], 
+        RowBox[{"1", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}]]}], "}"}]}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.7504684566402273`*^9, 3.7504684855535316`*^9}},
+ CellLabel->"Out[20]=",ExpressionUUID->"f31a3f43-9234-41d6-a641-178cf848f155"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "x", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`x}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "y", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`y}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "z", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`z}, 1, 2, 1],
+            Editable->False]}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "x", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`x}, 1, 2, 1],
+            Editable->False]},
+          {"0"},
+          {"0"},
+          {"0"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "y", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`y}, 1, 2, 1],
+            Editable->False]},
+          {"0"},
+          {"0"},
+          {"0"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "z", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`z}, 1, 2, 1],
+            Editable->False]},
+          {"0"},
+          {"0"},
+          {"0"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}]},
+     {
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "x", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`x}, 1, 2, 1],
+            Editable->False]},
+          {"0"},
+          {"0"},
+          {"0"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "x", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`x}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "y", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`y}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "z", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`z}, 1, 2, 1],
+            Editable->False]}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "y", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`y}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "x", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`x}, 1, 2, 1],
+            Editable->False]},
+          {"0"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "z", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`z}, 1, 2, 1],
+            Editable->False]},
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "x", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`x}, 1, 2, 1],
+            Editable->False]}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}]},
+     {
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "y", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`y}, 1, 2, 1],
+            Editable->False]},
+          {"0"},
+          {"0"},
+          {"0"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "y", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`y}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "x", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`x}, 1, 2, 1],
+            Editable->False]},
+          {"0"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "x", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`x}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "y", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`y}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "z", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`z}, 1, 2, 1],
+            Editable->False]}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "z", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`z}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "y", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`y}, 1, 2, 1],
+            Editable->False]}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}]},
+     {
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "z", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`z}, 1, 2, 1],
+            Editable->False]},
+          {"0"},
+          {"0"},
+          {"0"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "z", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`z}, 1, 2, 1],
+            Editable->False]},
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "x", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`x}, 1, 2, 1],
+            Editable->False]}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"2", " ", "z", " ", 
+               RowBox[{"\[Phi]", "[", 
+                RowBox[{"x", ",", "y", ",", "z"}], "]"}]}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {(-2) $CellContext`z}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "y", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`y}, 1, 2, 1],
+            Editable->False]}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}], 
+      RowBox[{"(", "\[NoBreak]", 
+       TagBox[GridBox[{
+          {"0"},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "x", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`x}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "y", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`y}, 1, 2, 1],
+            Editable->False]},
+          {
+           InterpretationBox[
+            RowBox[{
+             RowBox[{"2", " ", "z", " ", 
+              RowBox[{"\[Phi]", "[", 
+               RowBox[{"x", ",", "y", ",", "z"}], "]"}]}], "+", 
+             InterpretationBox[
+              SuperscriptBox[
+               RowBox[{"O", "[", 
+                RowBox[{"\[Phi]", "[", 
+                 RowBox[{"x", ",", "y", ",", "z"}], "]"}], "]"}], "2"],
+              SeriesData[
+               $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {}, 1, 2, 1],
+              Editable->False]}],
+            SeriesData[
+             $CellContext`\[Phi][$CellContext`x, $CellContext`y, \
+$CellContext`z], 0, {2 $CellContext`z}, 1, 2, 1],
+            Editable->False]}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.5599999999999999]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}],
+        Column], "\[NoBreak]", ")"}]}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{{3.7504684566402273`*^9, 3.750468485584797*^9}},
+ CellLabel->
+  "Out[21]//MatrixForm=",ExpressionUUID->"621588af-c341-44e9-834e-\
+cf81c7faac53"]
+}, Open  ]]
+},
+WindowSize->{1920, 997},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification:>1.3 Inherited,
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (March 6, 2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 472, 13, 63, "Input",ExpressionUUID->"a8a49900-eb86-4820-b819-f85b5891a648"],
+Cell[1033, 35, 210, 3, 37, "Input",ExpressionUUID->"543c18ef-9107-4d92-a39d-c716a591ea01"],
+Cell[1246, 40, 2421, 69, 113, "Input",ExpressionUUID->"dd5ef2ed-3610-4f1d-ae66-b60320fa35b4"],
+Cell[CellGroupData[{
+Cell[3692, 113, 2063, 56, 119, "Input",ExpressionUUID->"35977433-4dde-4c41-844f-25bb30b7d54b"],
+Cell[5758, 171, 79412, 1995, 488, "Output",ExpressionUUID->"b9b5b95f-e5aa-43b0-8ea6-abad9aafc9ef"],
+Cell[85173, 2168, 2489, 68, 81, "Output",ExpressionUUID->"d9f3169f-14dd-482f-b330-e7baaf8eefe0"],
+Cell[87665, 2238, 1446, 36, 48, "Output",ExpressionUUID->"4c07d8e8-7783-4eb2-86c5-80a3050ef99d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[89148, 2279, 1037, 29, 68, "Input",ExpressionUUID->"1e37f140-a284-4309-acf2-8efac2f07049"],
+Cell[90188, 2310, 10558, 312, 253, "Output",ExpressionUUID->"f31a3f43-9234-41d6-a641-178cf848f155"],
+Cell[100749, 2624, 33528, 866, 440, "Output",ExpressionUUID->"621588af-c341-44e9-834e-cf81c7faac53"]
+}, Open  ]]
+}
+]
+*)
+
