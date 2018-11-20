@@ -2,21 +2,43 @@
 
 RankError::oob="The length of `1` and `2` must be the same as the up and down rank of the tensor.";
 RankError::depth="The sum of `1` and `2` must be the same as the depth of the data matrix,`3` .";
+indexError::mismatch="The two tensors must have the same indices to be added together";
 
 
-(*Ensures compatability with tensor wrapper*)
-Tensor[T1_][downrank]^:=T1[downrank]
-Tensor[T1_][uprank]^:=T1[uprank]
-Tensor[T1_][data]^:=T1[data]
+(*Ensures compatability with tensor wrap;per*)
+Tensor[T1_][downrank]^:=T1[downrank];
+Tensor[T1_][uprank]^:=T1[uprank];
+Tensor[T1_][data]^:=T1[data];
 
-(*add a check to validate that T1 and T2 have the same uprank and downrank*)
-Tensor[T1_]+Tensor[T2_]^:= MakeTensor[T1[data]+T2[data],T1[downrank],T2[uprank]]
 
-Quiet[Tensor[T1_]-Tensor[T2_]^:= MakeTensor[T1[data]-T2[data],T1[downrank],T2[uprank]]]
+Superscript[Subscript[Tensor[T1_], down1_],up1_]+Superscript[Subscript[Tensor[T2_], down2_],up2_]^:= Module[{varsums,indices,tensorData},
+
+If[Sort[down1]===Sort[down2] && Sort[up1]===Sort[up2],
+
+indices = Flatten[{down1,up1}];
+varsums = Table[{v,1,NDim},{v,indices}];
+
+tensorData = Table[Tensor[T1][[down1,up1]]+Tensor[T2][[down2,up2]],##]&@@ varsums;
+
+Superscript[Subscript[MakeTensor[tensorData,T1[downrank],T2[uprank]], down1],up1],
+
+Message[indexError::mismatch]]
+
+];
+
+a_ Superscript[Subscript[Tensor[T_], down_],up_]^:= Superscript[Subscript[MakeTensor[a Tensor[T][data],T[downrank],T[uprank]], down],up]
+
+
 
 (*add compatability with derivatives of arbitrary order*)
-(*make it so derivatives can increase tensor order I.E. Subscript[\[ScriptCapitalD], i] instead of Subscript[\[ScriptCapitalD], x] specifically*)
-D[Tensor[T_],x_]^:=MakeTensor[D[T[data],x],T[downrank],T[uprank]]
+f[a_,b_]:= a[b]
+Subscript[D, i_][ Superscript[Subscript[Tensor[T_], downIndices_],upIndices_]]^:=Module[{newdata},
+If[MemberQ[coordinates,i],
+Superscript[Subscript[MakeTensor[D[T[data],i],T[downrank],T[uprank]], downIndices],upIndices],
+newdata = Outer[f,  Table[Function[F,D[F,II]]/.II-> ii,{ii,coordinates}],T[data]];
+Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank]], Join[{i},downIndices]],upIndices]
+]
+]
 
 (*Acces tensor data with T[[upList,downList]] where upList and downList are lists of integers of the same length as uprank and downrank*)
 
@@ -30,8 +52,7 @@ Message[RankError::oob,downList,upList]]
 
 (*i just made my function compatible with your stringy notation, im sure they can talk more directly, but idk how to modifiy Einstein properly*)
 
-(*my work is breaking product becouse its not returning tensor WITH INDICES, at the end of the calcuation we want a tensor without indices, so idk how to deal with that, maybe a function strips tensor indices?*)
-(*Finally, I think einstein should also work on a single tensor, I.E. if we want to contract the riemann tensor to the ricci tensor id like to type     Subscript[R, {a,b,c}]^{b}*) 
+(* I think einstein should also work on a single tensor, I.E. if we want to contract the riemann tensor to the ricci tensor id like to type     Subscript[R, {a,b,c}]^{b}*) 
 
 (*IMPORTANT*)
 (*To use this properly you must use T with a subscript and a superscript NOT a power, please copy the template below to do so for now*)
@@ -61,22 +82,11 @@ LToS[l_]:=StringDelete[StringRiffle[l]," "]
 
 
 MakeTensor[matrix_, DownRank_,UpRank_] := Module[{tmp,function},
-
 tmp = Null;
-(*If[Head @ matrix\[Equal]List,
-	If[ArrayDepth[matrix]==DownRank+UpRank,
-		tmp = <|data->matrix, downrank-> DownRank, uprank-> UpRank|>;
-		Tensor[tmp],
-		Message[RankError::depth,DownRank,UpRank,matrix]];,
-	tmp = <|data->matrix, downrank-> DownRank, uprank-> UpRank|>;
-	Tensor[tmp]]
-	Tensor[tmp]*)
-	
-	If[If[Head @ matrix === List, ArrayDepth[matrix],0]==DownRank+UpRank,
+If[If[Head @ matrix === List, ArrayDepth[matrix],0]==DownRank+UpRank,
 		tmp = <|data->matrix, downrank-> DownRank, uprank-> UpRank|>;,
 		Message[RankError::depth,DownRank,UpRank,matrix]];
 		Tensor[tmp]
-		
 ]
 
 
@@ -95,11 +105,12 @@ TProduct[T1_,T2_]:=Module[{result,numIndices,dummyvars,dummyvarsReordered},
 Quiet[
 If[Not[Head @ T2[data]=== List] || Not[Head @ T1[data]=== List],
 	result = T1[data] T2[data];,
+	
 	result = Outer[Times,T1[data],T2[data]];
 	numIndices = T1[downrank]+T1[uprank]+T2[downrank]+T2[uprank];
 	dummyvars = Table[Symbol["var"<>ToString[i]],{i,numIndices}];
 	dummyvarsReordered = Join[Table[dummyvars[[i]],{i,1,T1[downrank]}],Table[dummyvars[[i]],{i,T1[downrank]+T1[uprank]+1,T1[downrank]+T1[uprank]+T2[downrank]}],Table[dummyvars[[i]],{i,T1[downrank]+1,T1[downrank]+T1[uprank]}],Table[dummyvars[[i]],{i,T1[downrank]+T1[uprank]+T2[downrank]+1,T1[downrank]+T1[uprank]+T2[downrank]+T2[uprank]}]];
-	result = Table@@Flatten[{{Part@@Flatten[{{result},dummyvarsReordered},1]},Table[{v,1,NDim},{v,dummyvars}]},1];
+	result = Table@@Flatten[{{Part@@Flatten[{{result},dummyvars},1]},Table[{v,1,NDim},{v,dummyvarsReordered}]},1];
 ];
 MakeTensor[result,T1[downrank]+T2[downrank],T1[uprank]+T2[uprank]]
 	
@@ -123,3 +134,6 @@ If[Length[contractVars]!=0, Einstein[out],out]
 Einstein[{T1_,argD1_,argU1_},{T2_,argD2_,argU2_}] := Einstein[{TProduct[T1,T2],argD1<>argD2,argU1<>argU2}]
 (* define for three or more arguments *)
 Einstein[{T1_,argD1_,argU1_},{T2_,argD2_,argU2_},{T3___,argD3___,argU3___}] := Einstein[Einstein[{T1,argD1,argU1},{T2,argD2,argU2}],{T3,argD3,argU3}]
+
+
+StripIndices[IndexedTensor_]:=IndexedTensor[[1,1]]
