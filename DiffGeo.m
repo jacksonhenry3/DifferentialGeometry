@@ -30,7 +30,6 @@ Message[RankError::oob,downList,upList]]
 
 (*i just made my function compatible with your stringy notation, im sure they can talk more directly, but idk how to modifiy Einstein properly*)
 
-(*I believe eisntien returns a list where the first object is a tensor and the last two are the names of the up and down indices of the result, I think it would make more sense for it to just return the tensor, additionally, this may be breaking the product when more than two tensors are involved*)
 (*my work is breaking product becouse its not returning tensor WITH INDICES, at the end of the calcuation we want a tensor without indices, so idk how to deal with that, maybe a function strips tensor indices?*)
 (*Finally, I think einstein should also work on a single tensor, I.E. if we want to contract the riemann tensor to the ricci tensor id like to type     Subscript[R, {a,b,c}]^{b}*) 
 
@@ -46,7 +45,16 @@ Superscript[\!\(\*SubscriptBox[\(T\), \({}\)]\),{}] ;
 (*set it up to check if the sub or suprscript list is mising so we dont need an empty list for absent indices*)
 (*add a check to make sure that a1 b1 a2 b2 have the same length as up and down rank of T2 and T2*)
 (* add a check to make sure that indices are repeated only once and are properly up and down*)
-Superscript[Subscript[Tensor[T1_], a1_],b1_] Superscript[Subscript[Tensor[T2_], a2_],b2_] ^:=Einstein[{T1,LToS[a1],LToS[b1]},{T2,LToS[a2],LToS[b2]}][[1]]
+Superscript[Subscript[Tensor[T1_], a1_],b1_] Superscript[Subscript[Tensor[T2_], a2_],b2_] ^:=Module[{result,downIndices,upIndices,resTensor},
+
+result = Einstein[{T1,LToS[a1],LToS[b1]},{T2,LToS[a2],LToS[b2]}];
+
+
+resTensor = result[[1]];
+downIndices = ToExpression[StringSplit[result[[2]],""]];
+upIndices = ToExpression[StringSplit[result[[3]],""]];
+Superscript[Subscript[resTensor, downIndices],upIndices]
+]
 
 LToS[l_]:=StringDelete[StringRiffle[l]," "]
 
