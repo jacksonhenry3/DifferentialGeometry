@@ -73,6 +73,8 @@ StripIndices[IndexedTensor_]:=IndexedTensor[[1,1]]
 Tensor[T_][downrank]^:=T[downrank];
 Tensor[T_][uprank]^:=T[uprank];
 Tensor[T_][data]^:=T[data];
+Simplify[Tensor[T_]]^:= MakeTensor[Simplify[T[data]],T[downrank],T[uprank]];
+Simplify[Superscript[Subscript[Tensor[T_], down_],up_]]^:= Superscript[Subscript[MakeTensor[Simplify[T[data]],T[downrank],T[uprank]], down],up];
 
 
 (*define addition between two tensors*)
@@ -109,7 +111,7 @@ Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank]], Join[{i},down
 \!\(
 \*SubscriptBox[\(\[Del]\), \(aa_\)]\ \*
 TemplateBox[{SubscriptBox[RowBox[{"Tensor", "[", "T_", "]"}], "down_"],"up_"},
-"Superscript"]\) ^:= Module[{sumvar,result},
+"Superscript"]\) ^:= Module[{sumvar,result,i},
 result = Subscript[D, aa][Superscript[Subscript[Tensor[T], down],up]];
 result += Sum[ Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({sumvar, aa}\)]\),{up[[i]]}] Superscript[Subscript[Tensor[T], down],ReplacePart[up,i-> sumvar]],{i,Length[up]}];
 result += Sum[ -Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({down[\([i]\)], aa}\)]\),{sumvar}] Superscript[Subscript[Tensor[T], ReplacePart[down,i-> sumvar]],up],{i,Length[down]}]
