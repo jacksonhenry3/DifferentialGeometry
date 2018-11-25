@@ -40,6 +40,16 @@ Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank]], Join[{i},down
 ]
 ]
 
+(*Covariant derivative*)
+\!\(
+\*SubscriptBox[\(\[Del]\), \(aa_\)]\ \*
+TemplateBox[{SubscriptBox[RowBox[{"Tensor", "[", "T_", "]"}], "down_"],"up_"},
+"Superscript"]\) ^:= Module[{sumvar,result},
+result = Subscript[D, a][Superscript[Subscript[Tensor[T], down],up]];
+result += Sum[ Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({sumvar, a}\)]\),{up[[i]]}] Superscript[Subscript[Tensor[T], down],ReplacePart[up,i-> sumvar]],{i,Length[up]}];
+result += Sum[ -Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({down[\([i]\)], aa}\)]\),{sumvar}] Superscript[Subscript[Tensor[T], ReplacePart[down,i-> sumvar]],up],{i,Length[down]}]
+]
+
 (*Acces tensor data with T[[upList,downList]] where upList and downList are lists of integers of the same length as uprank and downrank*)
 
 (*to do*)
@@ -68,7 +78,7 @@ Superscript[\!\(\*SubscriptBox[\(T\), \({}\)]\),{}] ;
 (* add a check to make sure that indices are repeated only once and are properly up and down*)
 Superscript[Subscript[Tensor[T1_], a1_],b1_] Superscript[Subscript[Tensor[T2_], a2_],b2_] ^:=Module[{result,downIndices,upIndices,resTensor},
 
-result = Einstein[{T1,LToS[a1],LToS[b1]},{T2,LToS[a2],LToS[b2]}];
+result = Einstein[{T1,a1,b1},{T2,a2,b2}];
 
 
 resTensor = result[[1]];
@@ -77,7 +87,6 @@ upIndices = ToExpression[StringSplit[result[[3]],""]];
 Superscript[Subscript[resTensor, downIndices],upIndices]
 ]
 
-LToS[l_]:=StringDelete[StringRiffle[l]," "]
 
 
 
@@ -113,15 +122,14 @@ If[Not[Head @ T2[data]=== List] || Not[Head @ T1[data]=== List],
 	result = Table@@Flatten[{{Part@@Flatten[{{result},dummyvars},1]},Table[{v,1,NDim},{v,dummyvarsReordered}]},1];
 ];
 MakeTensor[result,T1[downrank]+T2[downrank],T1[uprank]+T2[uprank]]
-	
 ,Part::pkspec1]]
 
 
-(* arguments will have form {T,"ijk,"lmn"}. Down indices must ALWAYS come first. *)
+(* arguments will have form {T,{i,j,k},{l,m,n}}. Down indices must ALWAYS come first. *)
 Einstein[{T_,argD_,argU_}] := Module[{varU,varD,contract,contractVars, tmp,out},
 tmp = T;
-varD = ToExpression[StringSplit[argD,""]];
-varU = ToExpression[StringSplit[argU,""]];
+varD = argD;
+varU = argU;
 contractVars = Table[If[MemberQ[varD,elem],Flatten[{Position[varD,elem],Position[varU,elem]}],## &[]],{elem,varU}];
 If[Length[contractVars]!=0, tmp = Contract[T,contractVars[[1,1]],contractVars[[1,2]]];
 varD = Delete[varD,contractVars[[1,1]]];
@@ -131,9 +139,12 @@ out = {tmp,StringRiffle[varD,""],StringRiffle[varU,""]};
 If[Length[contractVars]!=0, Einstein[out],out]
 ]
 (* define for two arguments *)
-Einstein[{T1_,argD1_,argU1_},{T2_,argD2_,argU2_}] := Einstein[{TProduct[T1,T2],argD1<>argD2,argU1<>argU2}]
+Einstein[{T1_,argD1_,argU1_},{T2_,argD2_,argU2_}] := Einstein[{TProduct[T1,T2],Join[argD1,argD2],Join[argU1,argU2]}]
 (* define for three or more arguments *)
 Einstein[{T1_,argD1_,argU1_},{T2_,argD2_,argU2_},{T3___,argD3___,argU3___}] := Einstein[Einstein[{T1,argD1,argU1},{T2,argD2,argU2}],{T3,argD3,argU3}]
 
 
 StripIndices[IndexedTensor_]:=IndexedTensor[[1,1]]
+
+
+
