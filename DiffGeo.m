@@ -117,6 +117,8 @@ result += Sum[ Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({sumvar, aa
 result += Sum[ -Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({down[\([i]\)], aa}\)]\),{sumvar}] Superscript[Subscript[Tensor[T], ReplacePart[down,i-> sumvar]],up],{i,Length[down]}]
 ]
 
+
+(*Alternate method for inputing Covariant Derivatives*)
 Subscript[CoD, aa_ ]Superscript[Subscript[Tensor[T_], down_],up_] ^:= \!\(
 \*SubscriptBox[\(\[Del]\), \(aa\)]\ \*
 TemplateBox[{SubscriptBox[RowBox[{"Tensor", "[", "T", "]"}], "down"],"up"},
