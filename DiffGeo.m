@@ -69,7 +69,7 @@ Einstein[{T1_,argD1_,argU1_},{T2_,argD2_,argU2_},{T3___,argD3___,argU3___}] := E
 StripIndices[IndexedTensor_]:=IndexedTensor[[1,1]]
 
 
-(*Ensures compatability with tensor wrap;per*)
+(*Ensures compatability with tensor wrapper*)
 Tensor[T_][downrank]^:=T[downrank];
 Tensor[T_][uprank]^:=T[uprank];
 Tensor[T_][data]^:=T[data];
@@ -116,6 +116,11 @@ result = Subscript[D, aa][Superscript[Subscript[Tensor[T], down],up]];
 result += Sum[ Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({sumvar, aa}\)]\),{up[[i]]}] Superscript[Subscript[Tensor[T], down],ReplacePart[up,i-> sumvar]],{i,Length[up]}];
 result += Sum[ -Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({down[\([i]\)], aa}\)]\),{sumvar}] Superscript[Subscript[Tensor[T], ReplacePart[down,i-> sumvar]],up],{i,Length[down]}]
 ]
+
+Subscript[CoD, aa_ ]Superscript[Subscript[Tensor[T_], down_],up_] ^:= \!\(
+\*SubscriptBox[\(\[Del]\), \(aa\)]\ \*
+TemplateBox[{SubscriptBox[RowBox[{"Tensor", "[", "T", "]"}], "down"],"up"},
+"Superscript"]\)
 
 
 (*Acces tensor data with T[[upList,downList]] where upList and downList are lists of integers of the same length as uprank and downrank*)
