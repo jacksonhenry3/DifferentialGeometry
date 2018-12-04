@@ -2,7 +2,6 @@
 
 (*ToDo*)
 (*add ? style documentation*)
-(*rework code so it doesnt rely on globaly defined NDimm,g, \[CapitalGamma]*)
 
 
 RankError::oob="The length of `1` and `2` must be the same as the up and down rank of the tensor.";
@@ -10,25 +9,33 @@ RankError::depth="The sum of `1` and `2` must be the same as the depth of the da
 indexError::mismatch="The two tensors must have the same indices to be added together";
 indexError::declerationmismatch="the provided index lists must be the same length as the up and down ranks of the listed tensors";
 typeError::wrongtype="Multiplication between a tensor and objects of type `1` is not defined";
+dimmError::depth="dimensionality of metric and coordinates must be equal";
 
 
-MakeTensor[matrix_, DownRank_,UpRank_] := Module[{tmp,function},
+MakeManifold[g_,coordinates_]:= Module[{},
+If[(Length[coordinates]==  Length[g[[1]]] && SquareMatrixQ[g]),
+manifold[<|metric-> g,coords-> coordinates,NDim-> Length[coordinates],invmetric -> Simplify[Inverse[g]]|>],
+Message[dimmError::depth]]
+]
+
+
+MakeTensor[matrix_, DownRank_,UpRank_,m_] := Module[{tmp,function,metric},
 tmp = Null;
 If[If[Head @ matrix === List, ArrayDepth[matrix],0]==DownRank+UpRank,
-		tmp = <|data->matrix, downrank-> DownRank, uprank-> UpRank|>;,
+		tmp = <|data->matrix, downrank-> DownRank, uprank-> UpRank,manifold -> m|>;,
 		Message[RankError::depth,DownRank,UpRank,matrix]];
 		Tensor[tmp]
 ]
 
 
 (* Contract TDownth index with TUpth index*)
-Contract[T_,TDown_,TUp_] :=Module[{downlist,uplist,i, result},
+Contract[T_,TDown_,TUp_] :=Module[{downlist,uplist,ii, result},
 downlist = ConstantArray[;;,T[downrank]];
-downlist[[TDown]] = i;
+downlist[[TDown]] = ii;
 uplist = ConstantArray[;;,T[uprank]];
-uplist[[TUp]] = i;
-result = FullSimplify[Sum[T[[downlist,uplist]],{i,1,NDim}]];
-MakeTensor[result,T[downrank]-1,T[uprank]-1]
+uplist[[TUp]] = ii;
+result = FullSimplify[Sum[T[[downlist,uplist]],{ii,1,T[manifold][NDim]}]];
+MakeTensor[result,T[downrank]-1,T[uprank]-1,T[manifold]]
 ]
 
 
@@ -41,9 +48,9 @@ If[Not[Head @ T2[data]=== List] || Not[Head @ T1[data]=== List],
 	numIndices = T1[downrank]+T1[uprank]+T2[downrank]+T2[uprank];
 	dummyvars = Table[Symbol["var"<>ToString[i]],{i,numIndices}];
 	dummyvarsReordered = Join[Table[dummyvars[[i]],{i,1,T1[downrank]}],Table[dummyvars[[i]],{i,T1[downrank]+T1[uprank]+1,T1[downrank]+T1[uprank]+T2[downrank]}],Table[dummyvars[[i]],{i,T1[downrank]+1,T1[downrank]+T1[uprank]}],Table[dummyvars[[i]],{i,T1[downrank]+T1[uprank]+T2[downrank]+1,T1[downrank]+T1[uprank]+T2[downrank]+T2[uprank]}]];
-	result = Table@@Flatten[{{Part@@Flatten[{{result},dummyvars},1]},Table[{v,1,NDim},{v,dummyvarsReordered}]},1];
+	result = Table@@Flatten[{{Part@@Flatten[{{result},dummyvars},1]},Table[{v,1,T1[manifold][NDim]},{v,dummyvarsReordered}]},1];
 ];
-MakeTensor[result,T1[downrank]+T2[downrank],T1[uprank]+T2[uprank]]
+MakeTensor[result,T1[downrank]+T2[downrank],T1[uprank]+T2[uprank],T1[manifold]]
 ,Part::pkspec1]]
 
 
@@ -71,10 +78,16 @@ StripIndices[IndexedTensor_]:=IndexedTensor[[1,1]]
 
 (*Ensures compatability with tensor wrapper*)
 Tensor[T_][downrank]^:=T[downrank];
+Tensor[T_][manifold]^:=T[manifold];
 Tensor[T_][uprank]^:=T[uprank];
 Tensor[T_][data]^:=T[data];
-Simplify[Tensor[T_]]^:= MakeTensor[Simplify[T[data]],T[downrank],T[uprank]];
-Simplify[Superscript[Subscript[Tensor[T_], down_],up_]]^:= Superscript[Subscript[MakeTensor[Simplify[T[data]],T[downrank],T[uprank]], down],up];
+manifold[M_][coords]^:=M[coords];
+manifold[M_][metric]^:=M[metric];
+manifold[M_][invmetric]^:=M[invmetric];
+manifold[M_][NDim]^:=M[NDim];
+
+Simplify[Tensor[T_]]^:= MakeTensor[Simplify[T[data]],T[downrank],T[uprank],T[manifold]];
+Simplify[Superscript[Subscript[Tensor[T_], down_],up_]]^:= Superscript[Subscript[MakeTensor[Simplify[T[data]],T[downrank],T[uprank],T[manifold]], down],up];
 
 
 (*define addition between two tensors*)
@@ -83,26 +96,25 @@ Superscript[Subscript[Tensor[T1_], down1_],up1_]+Superscript[Subscript[Tensor[T2
 If[Sort[down1]===Sort[down2] && Sort[up1]===Sort[up2],
 
 	indices = Flatten[{down1,up1}];
-	varsums = Table[{v,1,NDim},{v,indices}];
+	varsums = Table[{v,1,T1[manifold][NDim]},{v,indices}];
 	tensorData = Table[Tensor[T1][[down1,up1]]+Tensor[T2][[down2,up2]],##]&@@ varsums;
-	Superscript[Subscript[MakeTensor[tensorData,T1[downrank],T2[uprank]], down1],up1],
+	Superscript[Subscript[MakeTensor[tensorData,T1[downrank],T2[uprank],T1[manifold]], down1],up1],
 	
 	Message[indexError::mismatch]]
 ];
 
 
 (*define scalar multiplication of a tensor*)
-a_ Superscript[Subscript[Tensor[T_], down_],up_]^:= If[NumericQ[a] || Not[ValueQ[a]],Superscript[Subscript[MakeTensor[a Tensor[T][data],T[downrank],T[uprank]], down],up],Message[typeError::wrongtype,Head @ a]]
+a_ Superscript[Subscript[Tensor[T_], down_],up_]^:= If[NumericQ[a] || Not[ValueQ[a]],Superscript[Subscript[MakeTensor[a Tensor[T][data],T[downrank],T[uprank],T[manifold]], down],up],Message[typeError::wrongtype,Head @ a]]
 
 
 (*add compatability with derivatives of arbitrary order*)
-(*requires thatcoordinates is defined*)
 f[a_,b_]:= a[b]
 Subscript[D, i_][ Superscript[Subscript[Tensor[T_], downIndices_],upIndices_]]^:=Module[{newdata},
-If[MemberQ[coordinates,i],
-Superscript[Subscript[MakeTensor[D[T[data],i],T[downrank],T[uprank]], downIndices],upIndices],
-newdata = Outer[f,  Table[Function[F,D[F,II]]/.II-> ii,{ii,coordinates}],T[data]];
-Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank]], Join[{i},downIndices]],upIndices]]
+If[MemberQ[T[manifold][coords],i],
+Superscript[Subscript[MakeTensor[D[T[data],i],T[downrank],T[uprank],T[manifold]], downIndices],upIndices],
+newdata = Outer[f,  Table[Function[F,D[F,II]]/.II-> ii,{ii,T[manifold][coords]}],T[data]];
+Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank],T[manifold]], Join[{i},downIndices]],upIndices]]
 ]
 
 
