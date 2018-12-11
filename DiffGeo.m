@@ -76,6 +76,21 @@ Einstein[{T1_,argD1_,argU1_},{T2_,argD2_,argU2_},{T3___,argD3___,argU3___}] := E
 StripIndices[IndexedTensor_]:=IndexedTensor[[1,1]]
 
 
+(*ChangeBasis[T_,NewCoords_,NewInOld_,OldInNew_]:=Module[{M,NC,OC,J,JInv,NewT,Ddummyvars,Udummyvars},
+NC = MakeTensor[NewInOld,0,1,M];
+OC = MakeTensor[OldInNew,0,1,M];
+J = MakeTensor[Table[D[OldInNew[[i]],a],{i,Length[OldInNew]},{a,NewCoords}],1,1,M];
+JInv = MakeTensor[Table[D[NewInOld[[i]],a],{i,Length[NewInOld]},{a,T[manifold][coords]}],1,1,M];
+Ddummyvars = Table[Symbol["u"<>ToString[i]],{i,T[uprank]}];
+Udummyvars = Table[Symbol["u"<>ToString[i]],{i,T[downrank]}];
+Product[Superscript[Subscript[J, a],Udummyvars[[i]]], 
+Superscript[Subscript[T, Ddummyvars],Udummyvars] 
+]*)
+
+
+
+
+
 (*Ensures compatability with tensor wrapper*)
 Tensor[T_][downrank]^:=T[downrank];
 Tensor[T_][manifold]^:=T[manifold];
@@ -123,7 +138,10 @@ Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank],T[manifold]], J
 \!\(
 \*SubscriptBox[\(\[Del]\), \(aa_\)]\ \*
 TemplateBox[{SubscriptBox[RowBox[{"Tensor", "[", "T_", "]"}], "down_"],"up_"},
-"Superscript"]\) ^:= Module[{sumvar,result,i},
+"Superscript"]\) ^:= Module[{sumvar,result,i,g,ig,\[CapitalGamma]},
+g = MakeTensor[T[manifold][metric],2,0,T[manifold]];
+ig = MakeTensor[T[manifold][invmetric],0,2,T[manifold]];
+\[CapitalGamma]= StripIndices[1/2 (Subscript[D, a][Superscript[\!\(\*SubscriptBox[\(g\), \({j, k}\)]\),{}]]-Subscript[D, k][Superscript[\!\(\*SubscriptBox[\(g\), \({a, j}\)]\),{}]]+Subscript[D, j][Superscript[\!\(\*SubscriptBox[\(g\), \({a, k}\)]\),{}]])Superscript[\!\(\*SubscriptBox[\(ig\), \({}\)]\),{k,m}] ];
 result = Subscript[D, aa][Superscript[Subscript[Tensor[T], down],up]];
 result += Sum[ Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({sumvar, aa}\)]\),{up[[i]]}] Superscript[Subscript[Tensor[T], down],ReplacePart[up,i-> sumvar]],{i,Length[up]}];
 result += Sum[ -Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({down[\([i]\)], aa}\)]\),{sumvar}] Superscript[Subscript[Tensor[T], ReplacePart[down,i-> sumvar]],up],{i,Length[down]}]
