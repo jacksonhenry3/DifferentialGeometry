@@ -5,6 +5,7 @@
 (*implement automatic raising/lowering of indices*)
 (*implement referencing specific elements using indices*)
 (*implement just-in-time calculating of christoffel & riemann*)
+(*manifold element of tensors points to mainfold instead of duplicating information*)
 (*define tensors without stripping indices*)
 (*make up index use power instead of superscript so we can write tensors with ctrl+^*)
 
@@ -19,18 +20,18 @@ dimmError::depth="dimensionality of metric and coordinates must be equal";
 
 MakeManifold[g_,coordinates_]:= Module[{},
 If[(Length[coordinates]==  Length[g[[1]]] && SquareMatrixQ[g]),
-Manifold[<|metric-> g,coords-> coordinates,NDim-> Length[coordinates],invmetric -> Simplify[Inverse[g]],christoffel -> Null|>],
+<|metric-> g,coords-> coordinates,NDim-> Length[coordinates],invmetric -> Simplify[Inverse[g]],christoffel -> Null|>,
 Message[dimmError::depth]]
 ]
 
 
+SetAttributes[MakeTensor,HoldRest]
 MakeTensor[matrix_, DownRank_,UpRank_,m_] := Module[{tmp,function,metric},
 tmp = Null;
+(* the tensor doesn't keep the actual information of the metric, but rather just a string that's the name of the metric*)
 If[If[Head @ matrix === List, ArrayDepth[matrix],0]==DownRank+UpRank,
-		tmp = <|data->matrix, downrank-> DownRank, uprank-> UpRank,manifold -> Null|>;,
+		tmp = <|data->matrix, downrank->ReleaseHold[DownRank], uprank->ReleaseHold[UpRank],manifold -> ToString[HoldForm@m]|>;,
 		Message[RankError::depth,DownRank,UpRank,matrix]];
-		(* set the manifold do be a delayed-evaluation variable so manifold data is referenced instead of copied *)
-		tmp[manifold]:=m;
 		Tensor[tmp]
 ]
 
@@ -41,8 +42,8 @@ downlist = ConstantArray[;;,T[downrank]];
 downlist[[TDown]] = ii;
 uplist = ConstantArray[;;,T[uprank]];
 uplist[[TUp]] = ii;
-result = FullSimplify[Sum[T[[downlist,uplist]],{ii,1,T[manifold][NDim]}]];
-MakeTensor[result,T[downrank]-1,T[uprank]-1,T[manifold]]
+result = FullSimplify[Sum[T[[downlist,uplist]],{ii,1,Symbol[T[manifold]][NDim]}]];
+MakeTensor[result,T[downrank]-1,T[uprank]-1,Evaluate@T[manifold]]
 ]
 
 
@@ -55,9 +56,9 @@ If[Not[Head @ T2[data]=== List] || Not[Head @ T1[data]=== List],
 	numIndices = T1[downrank]+T1[uprank]+T2[downrank]+T2[uprank];
 	dummyvars = Table[Symbol["var"<>ToString[i]],{i,numIndices}];
 	dummyvarsReordered = Join[Table[dummyvars[[i]],{i,1,T1[downrank]}],Table[dummyvars[[i]],{i,T1[downrank]+T1[uprank]+1,T1[downrank]+T1[uprank]+T2[downrank]}],Table[dummyvars[[i]],{i,T1[downrank]+1,T1[downrank]+T1[uprank]}],Table[dummyvars[[i]],{i,T1[downrank]+T1[uprank]+T2[downrank]+1,T1[downrank]+T1[uprank]+T2[downrank]+T2[uprank]}]];
-	result = Table@@Flatten[{{Part@@Flatten[{{result},dummyvars},1]},Table[{v,1,T1[manifold][NDim]},{v,dummyvarsReordered}]},1];
+	result = Table@@Flatten[{{Part@@Flatten[{{result},dummyvars},1]},Table[{v,1,Symbol[T1[manifold]][NDim]},{v,dummyvarsReordered}]},1];
 ];
-MakeTensor[result,T1[downrank]+T2[downrank],T1[uprank]+T2[uprank],T1[manifold]]
+MakeTensor[result,T1[downrank]+T2[downrank],T1[uprank]+T2[uprank],Evaluate@T1[manifold]]
 ,Part::pkspec1]]
 
 
@@ -103,14 +104,9 @@ Tensor[T_][downrank]^:=T[downrank];
 Tensor[T_][manifold]^:=T[manifold];
 Tensor[T_][uprank]^:=T[uprank];
 Tensor[T_][data]^:=T[data];
-Manifold[M_][coords]^:=M[coords];
-Manifold[M_][metric]^:=M[metric];
-Manifold[M_][invmetric]^:=M[invmetric];
-Manifold[M_][NDim]^:=M[NDim];
-Manifold[M_][christoffel]^:=M[christoffel]
 
-Simplify[Tensor[T_]]^:= MakeTensor[Simplify[T[data]],T[downrank],T[uprank],T[manifold]];
-Simplify[Superscript[Subscript[Tensor[T_], down_],up_]]^:= Superscript[Subscript[MakeTensor[Simplify[T[data]],T[downrank],T[uprank],T[manifold]], down],up];
+Simplify[Tensor[T_]]^:= MakeTensor[Simplify[T[data]],T[downrank],T[uprank],Evaluate@T[manifold]];
+Simplify[Superscript[Subscript[Tensor[T_], down_],up_]]^:= Superscript[Subscript[MakeTensor[Simplify[T[data]],T[downrank],T[uprank],Evaluate@T[manifold]], down],up];
 
 
 (*define addition between two tensors*)
@@ -119,48 +115,52 @@ Superscript[Subscript[Tensor[T1_], down1_],up1_]+Superscript[Subscript[Tensor[T2
 If[Sort[down1]===Sort[down2] && Sort[up1]===Sort[up2],
 
 	indices = Flatten[{down1,up1}];
-	varsums = Table[{v,1,T1[manifold][NDim]},{v,indices}];
+	varsums = Table[{v,1,Symbol[T1[manifold]][NDim]},{v,indices}];
 	tensorData = Table[Tensor[T1][[down1,up1]]+Tensor[T2][[down2,up2]],##]&@@ varsums;
-	Superscript[Subscript[MakeTensor[tensorData,T1[downrank],T2[uprank],T1[manifold]], down1],up1],
+	Superscript[Subscript[MakeTensor[tensorData,T1[downrank],T2[uprank],Evaluate@T1[manifold]], down1],up1],
 	
 	Message[indexError::mismatch]]
 ];
 
 
 (*define scalar multiplication of a tensor*)
-a_ Superscript[Subscript[Tensor[T_], down_],up_]^:= If[NumericQ[a] || Not[ValueQ[a]],Superscript[Subscript[MakeTensor[a Tensor[T][data],T[downrank],T[uprank],T[manifold]], down],up],Message[typeError::wrongtype,Head @ a]]
+a_ Superscript[Subscript[Tensor[T_], down_],up_]^:= If[NumericQ[a] || Not[ValueQ[a]],Superscript[Subscript[MakeTensor[a Tensor[T][data],T[downrank],T[uprank],Evaluate@T[manifold]], down],up],Message[typeError::wrongtype,Head @ a]]
 
 
 (*add compatability with derivatives of arbitrary order*)
-f[a_,b_]:= a[b]
-Subscript[D, i_][ Superscript[Subscript[Tensor[T_], downIndices_],upIndices_]]^:=Module[{newdata},
-If[MemberQ[T[manifold][coords],i],
-Superscript[Subscript[MakeTensor[D[T[data],i],T[downrank],T[uprank],T[manifold]], downIndices],upIndices],
-newdata = Outer[f,  Table[Function[F,D[F,II]]/.II-> ii,{ii,T[manifold][coords]}],T[data]];
-Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank],T[manifold]], Join[{i},downIndices]],upIndices]]
+Subscript[D, i_][ Superscript[Subscript[Tensor[T_], downIndices_],upIndices_]]^:=Module[{newdata, f},
+f[a_,b_]:= a[b];
+If[MemberQ[Symbol[T[manifold]][coords],i],
+Superscript[Subscript[MakeTensor[D[T[data],i],T[downrank],T[uprank],Evaluate@T[manifold]], downIndices],upIndices],
+newdata = Outer[f,  Table[Function[F,D[F,II]]/.II-> ii,{ii,Symbol[T[manifold]][coords]}],T[data]];
+Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank],Evaluate@T[manifold]], Join[{i},downIndices]],upIndices]]
 ]
 
 
 (* calculate Christoffel symbols if not already calculated *)
-(* takes a metric as input *)
-(* currently having trouble figuring out how to set the value of the association inside the Manifold[]*)
-CalcChristoffel[M_] := Module[{g,ig,i,j,k,m},
+(* takes a metric name string *)
+SetAttributes[CalcChristoffel,HoldFirst]
+CalcChristoffel[input_] := Module[{name,M,g,ig,i,j,k,m},
+name=ToString[HoldForm@input];
+M=Symbol[name];
 If[M[christoffel] == Null,
-g = MakeTensor[M[metric],2,0,M];
-ig = MakeTensor[M[invmetric],0,2,M];
-(*M[christoffel] = StripIndices[1/2 (Subscript[D, i][Superscript[Subscript[g, {j,k}],{}]]-Subscript[D, k][Superscript[Subscript[g, {i,j}],{}]]+Subscript[D, j][Superscript[Subscript[g, {i,k}],{}]])Superscript[Subscript[ig, {}],{k,m}]]*)
-M[christoffel] ^=StripIndices[1/2 Superscript[\!\(\*SubscriptBox[\(ig\), \({}\)]\),{k,m}] (Subscript[D, j][Superscript[\!\(\*SubscriptBox[\(g\), \({i, k}\)]\),{}]]+Subscript[D, i][Superscript[\!\(\*SubscriptBox[\(g\), \({j, k}\)]\),{}]]-Subscript[D, k][Superscript[\!\(\*SubscriptBox[\(g\), \({i, j}\)]\),{}]])]
-]]
+g = MakeTensor[M[metric],2,0,Evaluate@name];
+ig = MakeTensor[M[invmetric],0,2,Evaluate@name];
+M[christoffel]=StripIndices[1/2 Superscript[\!\(\*SubscriptBox[\(ig\), \({}\)]\),{k,m}] (Subscript[D, j][Superscript[\!\(\*SubscriptBox[\(g\), \({i, k}\)]\),{}]]+Subscript[D, i][Superscript[\!\(\*SubscriptBox[\(g\), \({j, k}\)]\),{}]]-Subscript[D, k][Superscript[\!\(\*SubscriptBox[\(g\), \({i, j}\)]\),{}]])];
+Clear[Evaluate@name];
+Evaluate@Symbol[name] = M;
+Symbol[name][christoffel],
+Symbol[name][christoffel]]
+]
 
 
 (*Covariant derivative*)
-(*requires that \[CapitalGamma] is defined*)
 \!\(
 \*SubscriptBox[\(\[Del]\), \(aa_\)]\ \*
 TemplateBox[{SubscriptBox[RowBox[{"Tensor", "[", "T_", "]"}], "down_"],"up_"},
 "Superscript"]\) ^:= Module[{sumvar,result,i,\[CapitalGamma]},
-CalcChristoffel[T[manifold]];
-\[CapitalGamma]= T[manifold][christoffel];
+CalcChristoffel[Evaluate@T[manifold]];
+\[CapitalGamma]= Symbol[T[manifold]][christoffel];
 result = Subscript[D, aa][Superscript[Subscript[Tensor[T], down],up]];
 result += Sum[ Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({sumvar, aa}\)]\),{up[[i]]}] Superscript[Subscript[Tensor[T], down],ReplacePart[up,i-> sumvar]],{i,Length[up]}];
 result += Sum[ -Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({down[\([i]\)], aa}\)]\),{sumvar}] Superscript[Subscript[Tensor[T], ReplacePart[down,i-> sumvar]],up],{i,Length[down]}]
@@ -184,6 +184,7 @@ Part@@Flatten[{{T[data]},Flatten[{downList,upList}]},1],
 Message[RankError::oob,downList,upList]]
 
 
+(* Define tensor product with indices to use Einstein when working with tensors *)
 (*IMPORTANT*)
 (*To use this properly you must use T with a subscript and a superscript NOT a power, please copy the template below to do so for now*)
 
