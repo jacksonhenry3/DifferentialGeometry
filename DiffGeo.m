@@ -2,6 +2,11 @@
 
 (*ToDo*)
 (*add ? style documentation*)
+(*implement automatic raising/lowering of indices*)
+(*implement referencing specific elements using indices*)
+(*implement just-in-time calculating of christoffel & riemann*)
+(*define tensors without stripping indices*)
+(*make up index use power instead of superscript so we can write tensors with ctrl+^*)
 
 
 RankError::oob="The length of `1` and `2` must be the same as the up and down rank of the tensor.";
@@ -14,7 +19,7 @@ dimmError::depth="dimensionality of metric and coordinates must be equal";
 
 MakeManifold[g_,coordinates_]:= Module[{},
 If[(Length[coordinates]==  Length[g[[1]]] && SquareMatrixQ[g]),
-manifold[<|metric-> g,coords-> coordinates,NDim-> Length[coordinates],invmetric -> Simplify[Inverse[g]]|>],
+Manifold[<|metric-> g,coords-> coordinates,NDim-> Length[coordinates],invmetric -> Simplify[Inverse[g]],christoffel -> Null|>],
 Message[dimmError::depth]]
 ]
 
@@ -22,8 +27,10 @@ Message[dimmError::depth]]
 MakeTensor[matrix_, DownRank_,UpRank_,m_] := Module[{tmp,function,metric},
 tmp = Null;
 If[If[Head @ matrix === List, ArrayDepth[matrix],0]==DownRank+UpRank,
-		tmp = <|data->matrix, downrank-> DownRank, uprank-> UpRank,manifold -> m|>;,
+		tmp = <|data->matrix, downrank-> DownRank, uprank-> UpRank,manifold -> Null|>;,
 		Message[RankError::depth,DownRank,UpRank,matrix]];
+		(* set the manifold do be a delayed-evaluation variable so manifold data is referenced instead of copied *)
+		tmp[manifold]:=m;
 		Tensor[tmp]
 ]
 
@@ -96,10 +103,11 @@ Tensor[T_][downrank]^:=T[downrank];
 Tensor[T_][manifold]^:=T[manifold];
 Tensor[T_][uprank]^:=T[uprank];
 Tensor[T_][data]^:=T[data];
-manifold[M_][coords]^:=M[coords];
-manifold[M_][metric]^:=M[metric];
-manifold[M_][invmetric]^:=M[invmetric];
-manifold[M_][NDim]^:=M[NDim];
+Manifold[M_][coords]^:=M[coords];
+Manifold[M_][metric]^:=M[metric];
+Manifold[M_][invmetric]^:=M[invmetric];
+Manifold[M_][NDim]^:=M[NDim];
+Manifold[M_][christoffel]^:=M[christoffel]
 
 Simplify[Tensor[T_]]^:= MakeTensor[Simplify[T[data]],T[downrank],T[uprank],T[manifold]];
 Simplify[Superscript[Subscript[Tensor[T_], down_],up_]]^:= Superscript[Subscript[MakeTensor[Simplify[T[data]],T[downrank],T[uprank],T[manifold]], down],up];
@@ -133,15 +141,26 @@ Superscript[Subscript[MakeTensor[newdata,T[downrank]+1,T[uprank],T[manifold]], J
 ]
 
 
+(* calculate Christoffel symbols if not already calculated *)
+(* takes a metric as input *)
+(* currently having trouble figuring out how to set the value of the association inside the Manifold[]*)
+CalcChristoffel[M_] := Module[{g,ig,i,j,k,m},
+If[M[christoffel] == Null,
+g = MakeTensor[M[metric],2,0,M];
+ig = MakeTensor[M[invmetric],0,2,M];
+(*M[christoffel] = StripIndices[1/2 (Subscript[D, i][Superscript[Subscript[g, {j,k}],{}]]-Subscript[D, k][Superscript[Subscript[g, {i,j}],{}]]+Subscript[D, j][Superscript[Subscript[g, {i,k}],{}]])Superscript[Subscript[ig, {}],{k,m}]]*)
+M[christoffel] ^=StripIndices[1/2 Superscript[\!\(\*SubscriptBox[\(ig\), \({}\)]\),{k,m}] (Subscript[D, j][Superscript[\!\(\*SubscriptBox[\(g\), \({i, k}\)]\),{}]]+Subscript[D, i][Superscript[\!\(\*SubscriptBox[\(g\), \({j, k}\)]\),{}]]-Subscript[D, k][Superscript[\!\(\*SubscriptBox[\(g\), \({i, j}\)]\),{}]])]
+]]
+
+
 (*Covariant derivative*)
 (*requires that \[CapitalGamma] is defined*)
 \!\(
 \*SubscriptBox[\(\[Del]\), \(aa_\)]\ \*
 TemplateBox[{SubscriptBox[RowBox[{"Tensor", "[", "T_", "]"}], "down_"],"up_"},
-"Superscript"]\) ^:= Module[{sumvar,result,i,g,ig,\[CapitalGamma]},
-g = MakeTensor[T[manifold][metric],2,0,T[manifold]];
-ig = MakeTensor[T[manifold][invmetric],0,2,T[manifold]];
-\[CapitalGamma]= StripIndices[1/2 (Subscript[D, a][Superscript[\!\(\*SubscriptBox[\(g\), \({j, k}\)]\),{}]]-Subscript[D, k][Superscript[\!\(\*SubscriptBox[\(g\), \({a, j}\)]\),{}]]+Subscript[D, j][Superscript[\!\(\*SubscriptBox[\(g\), \({a, k}\)]\),{}]])Superscript[\!\(\*SubscriptBox[\(ig\), \({}\)]\),{k,m}] ];
+"Superscript"]\) ^:= Module[{sumvar,result,i,\[CapitalGamma]},
+CalcChristoffel[T[manifold]];
+\[CapitalGamma]= T[manifold][christoffel];
 result = Subscript[D, aa][Superscript[Subscript[Tensor[T], down],up]];
 result += Sum[ Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({sumvar, aa}\)]\),{up[[i]]}] Superscript[Subscript[Tensor[T], down],ReplacePart[up,i-> sumvar]],{i,Length[up]}];
 result += Sum[ -Superscript[\!\(\*SubscriptBox[\(\[CapitalGamma]\), \({down[\([i]\)], aa}\)]\),{sumvar}] Superscript[Subscript[Tensor[T], ReplacePart[down,i-> sumvar]],up],{i,Length[down]}]
