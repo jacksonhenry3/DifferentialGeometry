@@ -208,18 +208,38 @@ Message[indexError::declerationmismatch]
 
 
 (* ::Subsection:: *)
+(*Metric*)
+
+
+SetAttributes[GetMetric,HoldFirst]
+GetMetric[input_] := Module[{name,M},
+name=ToString[HoldForm@input];
+M=Symbol[name];
+MakeTensor[M[metric],2,0,Evaluate@name]
+]
+
+
+SetAttributes[GetInverseMetric,HoldFirst]
+GetInverseMetric[input_] := Module[{name,M},
+name=ToString[HoldForm@input];
+M=Symbol[name];
+MakeTensor[M[invmetric],0,2,Evaluate@name]
+]
+
+
+(* ::Subsection:: *)
 (*Christoffel Symbols*)
 
 
 (* calculate Christoffel symbols if not already calculated *)
 (* takes a metric name string *)
-SetAttributes[CalcChristoffel,HoldFirst]
-CalcChristoffel[input_] := Module[{name,M,g,ig,i,j,k,m},
+SetAttributes[GetChristoffel,HoldFirst]
+GetChristoffel[input_] := Module[{name,M,g,ig,i,j,k,m},
 name=ToString[HoldForm@input];
 M=Symbol[name];
 If[M[christoffel] == Null,
-g = MakeTensor[M[metric],2,0,Evaluate@name];
-ig = MakeTensor[M[invmetric],0,2,Evaluate@name];
+g = GetMetric[Evaluate@name];
+ig = GetInverseMetric[Evaluate@name];
 M[christoffel]=StripIndices[1/2 Superscript[\!\(\*SubscriptBox[\(ig\), \({}\)]\),{k,m}] (Subscript[D, j][Superscript[\!\(\*SubscriptBox[\(g\), \({i, k}\)]\),{}]]+Subscript[D, i][Superscript[\!\(\*SubscriptBox[\(g\), \({j, k}\)]\),{}]]-Subscript[D, k][Superscript[\!\(\*SubscriptBox[\(g\), \({i, j}\)]\),{}]])];
 Clear[Evaluate@name];
 Evaluate@Symbol[name] = M;
